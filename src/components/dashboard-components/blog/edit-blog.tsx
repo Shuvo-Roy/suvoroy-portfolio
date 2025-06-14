@@ -11,7 +11,7 @@ import { Label } from "@radix-ui/react-label";
 import { Button } from "@/components/ui/button";
 import { Blog } from "@prisma/client";
 import MDEditor from "@uiw/react-md-editor";
-import { editBlog } from "../../../../actions/editblog";
+import { editBlog } from "../../../../actions/blog/editblog";
 
 type EditBlogProps = {
   blog: Blog;

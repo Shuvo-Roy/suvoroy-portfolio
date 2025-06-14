@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { Button } from "@/components/ui/button";
-import { createBlog } from "../../../../actions/create-blogs";
+import { createBlog } from "../../../../actions/blog/create-blogs";
 import MDEditor from "@uiw/react-md-editor";
 
 

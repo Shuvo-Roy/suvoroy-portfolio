@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { updateEducation } from "../../../../actions/update-edu";
+import { updateEducation } from "../../../../actions/education/update-edu";
 
 type Education = {
   id: string;

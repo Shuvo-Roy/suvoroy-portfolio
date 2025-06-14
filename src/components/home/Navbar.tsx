@@ -8,7 +8,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "../../app/context/ThemeContext";
 
 
 const Navbar = () => {

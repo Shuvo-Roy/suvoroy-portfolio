@@ -1,7 +1,7 @@
 'use client';
 
 import { useTransition } from "react";
-import { deleteProject } from "../../../../actions/deleteproject";
+import { deleteProject } from "../../../../actions/project/deleteproject";
 import { Button } from "../../ui/button";
 
 type DeleteButtonProps = {

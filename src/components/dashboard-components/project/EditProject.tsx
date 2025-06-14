@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { Button } from "@/components/ui/button";
-import { editProject } from "../../../../actions/update-project";
+import { editProject } from "../../../../actions/project/update-project";
 
 interface TechStack {
   id: string;

@@ -14,7 +14,7 @@ import { Prisma } from '@prisma/client';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import React, { useTransition } from 'react';
-import { deleteBlog } from '../../../actions/deleteblog';
+import { deleteBlog } from '../../../actions/blog/deleteblog';
 import { Badge } from '@/components/ui/badge';
 
 type RecentBlogsProps = {

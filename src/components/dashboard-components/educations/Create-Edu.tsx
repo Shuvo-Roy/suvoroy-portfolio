@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { Button } from "@/components/ui/button";
-import { createEducation } from "../../../../actions/create-edu";
+import { createEducation } from "../../../../actions/education/create-edu";
 
 const CreateEducation = () => {
   const [formState, action, isPending] = useActionState(createEducation, {

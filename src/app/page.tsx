@@ -1,8 +1,8 @@
-import Hero from "./components/Hero";
-import Projects from "./components/Projects";
-import { Blogs } from "./components/Blogs";
-import Newsletter from "./components/Newsletter";
-import Footer from "./components/Footer";
+import Hero from "../components/home/Hero";
+import Projects from "../components/home/Projects";
+import { Blogs } from "../components/home/Blogs";
+import Newsletter from "../components/home/Newsletter";
+import Footer from "../components/home/Footer";
 
 export default function Home() {
   return (

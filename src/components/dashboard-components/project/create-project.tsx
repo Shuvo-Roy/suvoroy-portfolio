@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { Button } from "@/components/ui/button";
-import { createProject } from "../../../../actions/create-projects";
+import { createProject } from "../../../../actions/project/create-projects";
 
 const CreateProject = () => {
   const [content, setContent] = useState("");

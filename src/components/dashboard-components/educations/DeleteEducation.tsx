@@ -1,7 +1,7 @@
 'use client';
 
 import { useTransition } from "react";
-import { deleteEdu } from "../../../../actions/deleteEdu";
+import { deleteEdu } from "../../../../actions/education/deleteEdu";
 import { Button } from "@/components/ui/button";
 
 
