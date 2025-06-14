@@ -1,0 +1,64 @@
+datasource db {
+  provider = "postgresql"  // or "mysql", "sqlite" etc.
+  url      = env("DATABASE_URL")
+}
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          String      @id @default(cuid())
+  clerkUserId String      @unique
+  email       String      @unique
+  name        String
+  imageUrl    String?
+
+  blogs    Blog[]
+  projects    Project[]
+  educations  Education[]
+}
+
+model Blog {
+  id              String     @id @default(cuid())
+  title           String
+  content         String
+  category        String
+  featuredImage   String?
+  slug            String     @unique // Unique slug for the blog
+  metaDescription String?    // Optional meta description for SEO
+  author          User       @relation(fields: [authorId], references: [id])
+  authorId        String
+  createdAt       DateTime   @default(now())
+}
+
+/// Projects model with many-to-many relation to TechStack
+model Project {
+  id          String      @id @default(cuid())
+  title       String
+  description String
+  link        String?
+  image       String?
+  author      User        @relation(fields: [authorId], references: [id])
+  authorId    String
+  techStacks  TechStack[] @relation("ProjectTechStack")
+  createdAt   DateTime    @default(now())
+}
+
+/// Technologies used in projects
+model TechStack {
+  id        String     @id @default(cuid())
+  name      String     @unique
+  projects  Project[]  @relation("ProjectTechStack")
+}
+
+model Education {
+  id          String   @id @default(cuid())
+  institution String
+  degree      String
+  field       String
+  startDate   DateTime
+  endDate     DateTime?
+  description String?
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String
+}
