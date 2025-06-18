@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from '../ui/button'
 
 export default function Newsletter() {
   return (
@@ -10,9 +11,9 @@ export default function Newsletter() {
                     <h2 className='text-2xl font-bold mb-4'>Subscribe to Newsletter</h2>
                     <p className='text-gray-600 dark:text-gray-300 md:w-2/3'>Get the latest updates on my projects,blogs and tech insights delivered stright to your inbox</p>
                 </div>
-                <form className='flex flex-col md:flex-row gap-4'>
-                    <input type='email' placeholder='Enter your email' className='flex-1 px-4 py-3 border rounded-lg dark:text-white border-gray-300 dark:border-slate-600 bg-white text-gray-500 dark:bg-dark focus:outline-none focus:ring-2 focus:ring-primary'/>
-                    <button type='submit' className='bg-primary text-white px-8 py-3 rounded-lg hover:bg-primary/50 transition-colors'>Subscribe</button>
+                <form className='flex flex-col md:flex-row gap-2'>
+                    <input type='email' placeholder='Enter your email' className='flex-1 px-4 border rounded-lg dark:text-white border-gray-300 dark:border-slate-600 bg-white text-gray-500 dark:bg-dark focus:outline-none focus:ring-2 focus:ring-primary'/>
+                    <Button type='submit' className='bg-green-700 text-white px-8 py-3 rounded-lg hover:bg-green-800 transition-colors'>Subscribe</Button>
                 </form>
                 </div>
                 

@@ -1,0 +1,17 @@
+export const heroBottomIcons: string[] = [
+  "/icons/cpp.svg",
+  "/icons/c.svg",
+  "/icons/python.svg",
+  "/icons/html.svg",
+  "/icons/css.svg",
+  "/icons/tailwind.svg",
+  "/icons/github.svg",
+  "/icons/javascript.svg",
+  "/icons/react.svg",
+  "/icons/nodejs.svg",
+  "/icons/next-js.svg",
+  "/icons/typescript.svg",
+  "/icons/mysql.svg",
+  "/icons/mongo.svg",
+  "/icons/postgresql.svg",
+];

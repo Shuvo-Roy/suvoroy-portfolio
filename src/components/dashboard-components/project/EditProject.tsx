@@ -20,9 +20,10 @@ interface Project {
   id: string;
   title: string;
   link: string | null;
+  github: string | null;
   featuredImage: string | null;
   description: string;
-  techStack?: TechStack[];
+  techStacks?: TechStack[];
 }
 
 interface UpdateProjectProps {
@@ -33,19 +34,21 @@ interface UpdateProjectProps {
 const UpdateProject = ({ project, onCancel }: UpdateProjectProps) => {
   const [title, setTitle] = useState(project.title ?? "");
   const [link, setLink] = useState(project.link ?? "");
+  const [github, setGithub] = useState(project.github ?? "");
   const [featuredImage, setFeaturedImage] = useState(
     project.featuredImage ?? ""
   );
   const [description, setDescription] = useState(project.description ?? "");
-  console.log(project);
   const [techstack, setTechstack] = useState(
     project.techStacks ? project.techStacks.map((t) => t.name).join(", ") : ""
   );
 
-  // **Fix here**: use editProject, not updateProject
-  const [formState, action, isPending] = useActionState(editProject, {
-    errors: {},
-  });
+  const [formState, formAction, isPending] = useActionState(
+    async (_prevState: any, formData: FormData) => {
+      return await editProject(_prevState, formData);
+    },
+    { errors: {} }
+  );
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,14 +57,14 @@ const UpdateProject = ({ project, onCancel }: UpdateProjectProps) => {
     formData.append("id", project.id);
     formData.set("title", title);
     formData.set("link", link);
+    formData.set("github", github);
     formData.set("description", description);
     formData.set("techstack", techstack);
 
     startTransition(() => {
-      action(formData);
+      formAction(formData);
     });
   };
-
   return (
     <div className="max-w-4xl mx-auto p-6">
       <Card>
@@ -79,8 +82,8 @@ const UpdateProject = ({ project, onCancel }: UpdateProjectProps) => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
-              {formState.errors.title && (
-                <span className="text-red-600 text-sm py-4">
+              {formState.errors && formState.errors.title && (
+                <span className="text-red-600 text-sm">
                   {formState.errors.title}
                 </span>
               )}
@@ -95,9 +98,24 @@ const UpdateProject = ({ project, onCancel }: UpdateProjectProps) => {
                 value={link}
                 onChange={(e) => setLink(e.target.value)}
               />
-              {formState.errors.link && (
+              {formState.errors && formState.errors.link && (
                 <span className="text-red-600 text-sm">
                   {formState.errors.link}
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label className="text-md">Github</Label>
+              <Input
+                type="text"
+                name="github"
+                placeholder="Github Link"
+                value={github}
+                onChange={(e) => setGithub(e.target.value)}
+              />
+              {formState.errors && formState.errors.github && (
+                <span className="text-red-600 text-sm">
+                  {formState.errors.github}
                 </span>
               )}
             </div>
@@ -111,7 +129,7 @@ const UpdateProject = ({ project, onCancel }: UpdateProjectProps) => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
-              {formState.errors.description && (
+              {formState.errors && formState.errors.description && (
                 <span className="text-red-600 text-sm ">
                   {formState.errors.description}
                 </span>
@@ -126,7 +144,7 @@ const UpdateProject = ({ project, onCancel }: UpdateProjectProps) => {
                 value={techstack}
                 onChange={(e) => setTechstack(e.target.value)}
               />
-              {formState.errors.techstack && (
+              {formState.errors && formState.errors.techstack && (
                 <span className="text-red-600 text-sm">
                   {formState.errors.techstack}
                 </span>
@@ -149,7 +167,13 @@ const UpdateProject = ({ project, onCancel }: UpdateProjectProps) => {
               <Button
                 variant={"outline"}
                 type="button"
-                onClick={() => (onCancel ? onCancel() : window.history.back())}
+                onClick={() => {
+                  if (onCancel) {
+                    onCancel();
+                  } else if (typeof window !== "undefined") {
+                    window.history.back();
+                  }
+                }}
               >
                 Cancel
               </Button>

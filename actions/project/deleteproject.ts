@@ -7,5 +7,5 @@ export const deleteProject = async (projectId:string)=>{
     await prisma.project.delete({
         where:{ id:projectId}
     })
-    revalidatePath("/dashboard")
+    revalidatePath("/dashboard/projects")
 }

@@ -16,6 +16,7 @@ model User {
   blogs    Blog[]
   projects    Project[]
   educations  Education[]
+  experience  Experience[]
 }
 
 model Blog {
@@ -37,6 +38,7 @@ model Project {
   title       String
   description String
   link        String?
+  github      String?
   image       String?
   author      User        @relation(fields: [authorId], references: [id])
   authorId    String
@@ -56,6 +58,16 @@ model Education {
   institution String
   degree      String
   field       String
+  startDate   DateTime
+  endDate     DateTime?
+  description String?
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String
+}
+model Experience {
+  id          String   @id @default(cuid())
+  company     String
+  position    String
   startDate   DateTime
   endDate     DateTime?
   description String?

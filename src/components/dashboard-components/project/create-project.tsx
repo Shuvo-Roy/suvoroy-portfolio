@@ -56,6 +56,15 @@ const CreateProject = () => {
               )}
             </div>
             <div className="flex flex-col gap-2">
+              <Label className="text-md">Github</Label>
+              <Input type="text" name="link" placeholder="Github Link" />
+              {formState.errors.github && (
+                <span className="text-red-600 text-sm">
+                  {formState.errors.github}
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col gap-2">
               <Label className="text-md">Description</Label>
               <textarea
                 name="description"

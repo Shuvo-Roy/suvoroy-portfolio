@@ -6,8 +6,8 @@ type EditProjectParams = {
   params: { id: string };
 };
 
-const Page: React.FC<EditProjectParams> = async ({ params }) => {
-  const { id } = params;
+const Page = async ({params}: EditProjectParams) => {
+  const id = params.id;
 
   const projectFromDb = await prisma.project.findUnique({
     where: { id },

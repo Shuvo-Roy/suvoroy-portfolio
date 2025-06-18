@@ -1,10 +1,11 @@
+
 export interface Projects {
-    title: string;
-    description:string;
-    technologies:string[];
-    githubLink: string;
-    demoLink: string;
-    image:string;
+  id: string;
+  title: string;
+  link: string | null;
+  description: string;
+  image: string | null;
+  techStacks: { id: string; name: string }[];
 }
 
 export interface Blog {

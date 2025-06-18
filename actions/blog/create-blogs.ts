@@ -47,7 +47,6 @@ export const createBlog = async (
     content: formData.get("content"),
   });
 const entries = Array.from(formData.entries());
-  console.log("🗂 FormData entries:", entries); 
   if (!result.success) {
     return { errors: result.error.flatten().fieldErrors };
   }

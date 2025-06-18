@@ -27,6 +27,7 @@ type CreateProjectFormState = {
     title?: string[];
     description?: string[];
     link?: string[];
+    github?: string[];
     techstack?: string[];
     image?: string[];
     formError?: string[];
@@ -42,6 +43,7 @@ export const createProject = async (
     title: formData.get("title"),
     description: formData.get("description"),
     link: formData.get("link"),
+    github: formData.get("github"),
     techstack: formData.get("techstack"),
   });
 
@@ -116,13 +118,12 @@ export const createProject = async (
       },
     });
   } catch (error) {
-    console.error("Error creating project:", error);
     return { errors: { formError: ["Failed to create project."] } };
   }
 
   // Revalidate dashboard and redirect
-  revalidatePath("/dashboard");
-  redirect("/dashboard");
+  revalidatePath("/dashboard/projects");
+  redirect("/dashboard/projects");
 
   return { errors: {} }; // success, no errors
 };

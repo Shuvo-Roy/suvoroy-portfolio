@@ -7,5 +7,5 @@ export const deleteEdu = async (educationId:string)=>{
     await prisma.education.delete({
         where:{ id:educationId}
     })
-    revalidatePath("/dashboard")
+    revalidatePath("/dashboard/educations")
 }

@@ -23,6 +23,7 @@ export const editProject = async (prevState: any, formData: FormData) => {
 
   const title = formData.get("title")?.toString();
   const link = formData.get("link")?.toString();
+  const github = formData.get("github")?.toString();
   const description = formData.get("description")?.toString();
   const techstack = formData.get("techstack")?.toString();
   const file = formData.get("featuredImage") as File;
@@ -30,6 +31,7 @@ export const editProject = async (prevState: any, formData: FormData) => {
   const errors: Record<string, string> = {};
   if (!title) errors.title = "Title is required";
   if (!link) errors.link = "Link is required";
+  if (!github) errors.github = "Github link is required";
   if (!description) errors.description = "Description is required";
 
   // Validate techstack presence and non-empty after trimming
@@ -62,6 +64,7 @@ export const editProject = async (prevState: any, formData: FormData) => {
       data: {
         title,
         link,
+        github,
         description,
         ...(imageUrl ? { image: imageUrl } : {}),
         techStacks: {
@@ -76,7 +79,7 @@ export const editProject = async (prevState: any, formData: FormData) => {
 
     return { success: true };
   } catch (err) {
-    console.error("Update failed:", err);
+    
     return { errors: { general: "Update failed" } };
   }
 };

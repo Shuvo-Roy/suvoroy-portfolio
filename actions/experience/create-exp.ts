@@ -6,11 +6,10 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-//Validation schema for education
-const createEducationSchema = z.object({
-  institution: z.string().min(2, "Institution name is too short"),
-  degree: z.string().min(2, "Degree is required"),
-  field: z.string().min(2, "Field of study is required"),
+// Validation schema for Experience
+const createExperienceSchema = z.object({
+  company: z.string().min(2, "Company name is required"),
+  position: z.string().min(2, "Position is required"),
   startDate: z.string().refine(date => !isNaN(Date.parse(date)), {
     message: "Start date is invalid",
   }),
@@ -23,11 +22,10 @@ const createEducationSchema = z.object({
   description: z.string().optional(),
 });
 
-type CreateEducationFormState = {
+type CreateExperienceFormState = {
   errors: {
-    institution?: string[];
-    degree?: string[];
-    field?: string[];
+    company?: string[];
+    position?: string[];
     startDate?: string[];
     endDate?: string[];
     description?: string[];
@@ -35,14 +33,13 @@ type CreateEducationFormState = {
   };
 };
 
-export const createEducation = async (
-  prevState: CreateEducationFormState,
+export const createExperience = async (
+  prevState: CreateExperienceFormState,
   formData: FormData
-): Promise<CreateEducationFormState> => {
-  const result = createEducationSchema.safeParse({
-    institution: formData.get("institution"),
-    degree: formData.get("degree"),
-    field: formData.get("field"),
+): Promise<CreateExperienceFormState> => {
+  const result = createExperienceSchema.safeParse({
+    company: formData.get("company"),
+    position: formData.get("position"),
     startDate: formData.get("startDate"),
     endDate: formData.get("endDate") || undefined,
     description: formData.get("description"),
@@ -54,7 +51,7 @@ export const createEducation = async (
 
   const { userId } = await auth();
   if (!userId) {
-    return { errors: { formError: ["You must be logged in to add education."] } };
+    return { errors: { formError: ["You must be logged in to add experience."] } };
   }
 
   const existingUser = await prisma.user.findUnique({
@@ -66,11 +63,10 @@ export const createEducation = async (
   }
 
   try {
-    await prisma.education.create({
+    await prisma.experience.create({
       data: {
-        institution: result.data.institution,
-        degree: result.data.degree,
-        field: result.data.field,
+        company: result.data.company,
+        position: result.data.position,
         startDate: new Date(result.data.startDate),
         endDate: result.data.endDate ? new Date(result.data.endDate) : null,
         description: result.data.description || null,
@@ -79,10 +75,10 @@ export const createEducation = async (
     });
   } catch (err) {
     return {
-      errors: { formError: ["Failed to create education entry."] },
+      errors: { formError: ["Failed to create experience entry."] },
     };
   }
 
-  revalidatePath("/dashboard/educations");
-  redirect("/dashboard/educations");
+  revalidatePath("/dashboard/experience");
+  redirect("/dashboard/experience");
 };

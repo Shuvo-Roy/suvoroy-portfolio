@@ -2,7 +2,6 @@ import LeftSidebar from "@/components/dashboard-components/left-sidebar";
 import { prisma } from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 import { ClerkProvider, SignIn, SignInButton } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await currentUser();
