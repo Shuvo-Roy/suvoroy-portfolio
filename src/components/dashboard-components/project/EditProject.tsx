@@ -37,9 +37,6 @@ const UpdateProject = ({ project, onCancel }: UpdateProjectProps) => {
   const [title, setTitle] = useState(project.title ?? "");
   const [link, setLink] = useState(project.link ?? "");
   const [github, setGithub] = useState(project.github ?? "");
-  const [featuredImage, setFeaturedImage] = useState(
-    project.featuredImage ?? ""
-  );
   const [description, setDescription] = useState(project.description ?? "");
   const [techstack, setTechstack] = useState(
     project.techStacks ? project.techStacks.map((t) => t.name).join(", ") : ""
