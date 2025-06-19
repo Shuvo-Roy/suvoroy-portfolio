@@ -30,7 +30,9 @@ interface UpdateProjectProps {
   project: Project;
   onCancel?: () => void;
 }
-
+type FormState = {
+  errors?: Record<string, string>;
+};
 const UpdateProject = ({ project, onCancel }: UpdateProjectProps) => {
   const [title, setTitle] = useState(project.title ?? "");
   const [link, setLink] = useState(project.link ?? "");
@@ -44,7 +46,7 @@ const UpdateProject = ({ project, onCancel }: UpdateProjectProps) => {
   );
 
   const [formState, formAction, isPending] = useActionState(
-    async (_prevState: any, formData: FormData) => {
+    async (_prevState: FormState, formData: FormData): Promise<FormState> => {
       return await editProject(_prevState, formData);
     },
     { errors: {} }
@@ -150,11 +152,17 @@ const UpdateProject = ({ project, onCancel }: UpdateProjectProps) => {
                 </span>
               )}
             </div>
-
             <div className="flex flex-col gap-2">
-              <Label htmlFor="featuredImage" className="flex flex-col gap-2">
+              <Label htmlFor="featuredImage">
                 Featured Image (Upload new to replace)
               </Label>
+              {project.featuredImage && (
+                <img
+                  src={project.featuredImage}
+                  alt="Current Featured"
+                  className="w-40 h-24 rounded object-cover mb-2"
+                />
+              )}
               <Input
                 type="file"
                 id="featuredImage"

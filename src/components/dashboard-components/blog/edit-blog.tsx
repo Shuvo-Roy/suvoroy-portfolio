@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Blog } from "@prisma/client";
 import MDEditor from "@uiw/react-md-editor";
 import { editBlog } from "../../../../actions/blog/editblog";
+import Image from "next/image";
 
 type EditBlogProps = {
   blog: Blog;
@@ -110,9 +111,11 @@ const EditBlogPage: React.FC<EditBlogProps> = ({ blog }) => {
                 accept="image/*"
               />
               {blog.featuredImage && (
-                <img
+                <Image
                   src={blog.featuredImage}
                   alt="Featured"
+                  width={200} 
+                  height={96}
                   className="mt-2 h-24 rounded"
                 />
               )}

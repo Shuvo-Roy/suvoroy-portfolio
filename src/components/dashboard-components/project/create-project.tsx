@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { createProject } from "../../../../actions/project/create-projects";
 
 const CreateProject = () => {
-  const [content, setContent] = useState("");
   const [formState, action, isPending] = useActionState(createProject, {
     errors: {},
   });
@@ -20,8 +19,6 @@ const CreateProject = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    formData.append("content", content);
-
     startTransition(() => {
       action(formData);
     });

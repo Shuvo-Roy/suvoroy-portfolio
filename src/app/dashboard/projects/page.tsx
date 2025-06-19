@@ -16,8 +16,7 @@ import Link from "next/link";
 import DeleteProjectBtn from "@/components/dashboard-components/project/DeleteProjectBtn";
 
 const ProjectPage = async () => {
-  const [projects, totalProjects] = await Promise.all([
-    prisma.project.findMany({
+  const projects= await prisma.project.findMany({
       orderBy: { createdAt: "desc" },
       include: {
         author: {
@@ -28,9 +27,7 @@ const ProjectPage = async () => {
           },
         },
       },
-    }),
-    prisma.project.count(),
-  ]);
+    })
   return (
     <div className="">
       <div className="flex items-center justify-between my-8 mx-4 dark:bg-slate-800 bg-slate-200 rounded-sm p-4">

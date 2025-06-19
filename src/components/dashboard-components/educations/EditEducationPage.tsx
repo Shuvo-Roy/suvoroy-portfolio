@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent, useState, startTransition } from "react";
+import React, { FormEvent} from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
@@ -23,7 +23,6 @@ type Props = {
 };
 
 const EditEducationPage: React.FC<Props> = ({ education }) => {
-  const [formState, setFormState] = useState({ errors: {} });
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -34,9 +33,7 @@ const EditEducationPage: React.FC<Props> = ({ education }) => {
 
     const result = await updateEducation(undefined, formData);
 
-    if (result?.errors) {
-      setFormState(result);
-    } else {
+    if (!result?.errors) {
       router.push("/dashboard/educations");
     }
   };

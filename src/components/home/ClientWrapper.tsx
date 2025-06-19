@@ -17,7 +17,7 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
     <>
       {showNavbar && <Navbar />}
       {children}
-      {showNavbar && <Footer />}
+      {showFooter && <Footer />}
     </>
   );
 }

@@ -26,7 +26,7 @@ const BlogDashboard = async () => {
     }),
     prisma.blog.count(),
   ]);
-  const [projects, totalProjects] = await Promise.all([
+  const totalProjects = await 
     prisma.project.findMany({
       orderBy: { createdAt: "desc" },
       include: {
@@ -38,9 +38,7 @@ const BlogDashboard = async () => {
           },
         },
       },
-    }),
-    prisma.project.count(),
-  ]);
+    })
 
   return (
     <main className="flex-1 p-4 md:p-8">
@@ -73,7 +71,7 @@ const BlogDashboard = async () => {
             <FaProjectDiagram className="h-5 w-5" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-center">{totalProjects}</div>
+            <div className="text-2xl font-bold text-center">{totalProjects.length}</div>
           </CardContent>
         </Card>
       </div>

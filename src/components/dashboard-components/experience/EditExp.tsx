@@ -18,11 +18,10 @@ type ExperienceType = {
 };
 
 type Props = {
-  experience: experience;
+  experience: ExperienceType;
 };
 
 const EditExperience: React.FC<Props> = ({ experience }) => {
-  const [formState, setFormState] = useState({ errors: {} });
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -33,9 +32,7 @@ const EditExperience: React.FC<Props> = ({ experience }) => {
 
     const result = await updateExperience(undefined, formData);
 
-    if (result?.errors) {
-      setFormState(result);
-    } else {
+    if (!result?.errors) {
       router.push("/dashboard/educations");
     }
   };
