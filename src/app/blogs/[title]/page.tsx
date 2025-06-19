@@ -5,7 +5,13 @@ import { Metadata } from 'next';
 type BlogDetailsProps = {
   params: { title: string };
 };
+interface Params {
+  title: string;
+}
 
+interface Props {
+  params: Params;
+}
 
 export async function generateMetadata({ params }: BlogDetailsProps): Promise<Metadata> {
   const { title } = params;
