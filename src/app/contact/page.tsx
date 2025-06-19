@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa'
 import { motion } from 'framer-motion'
 import { fadeIn, fadeInUp, slideInLeft, slideInRight } from '@/utils/animation';
+import { Button } from '@/components/ui/button';
 
 
 interface FormData {
@@ -68,7 +69,7 @@ export default function Contact() {
         >
           <motion.div {...fadeInUp}>
             <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
-            <p className="text-secondary">
+            <p className="text-primary">
               I&apos;m always open to discussing new projects, creative ideas, or
               opportunities to be part of your visions.
             </p>
@@ -83,14 +84,12 @@ export default function Contact() {
             <motion.div 
               className="flex items-center gap-4"
               variants={fadeInUp}
-              whileHover={{ x: 10 }}
-              transition={{ type: "spring", stiffness: 300 }}
             >
               <FaEnvelope className="h-6 w-6 text-primary" />
               <div>
                 <h3 className="font-semibold">Email</h3>
-                <a href="mailto:your.email@example.com" className="text-secondary hover:text-primary">
-                  your.email@example.com
+                <a href="mailto:suvo.cse.dev@gmail.com" className="text-primary">
+                  suvo.cse.dev@gmail.com
                 </a>
               </div>
             </motion.div>
@@ -98,14 +97,12 @@ export default function Contact() {
             <motion.div 
               className="flex items-center gap-4"
               variants={fadeInUp}
-              whileHover={{ x: 10 }}
-              transition={{ type: "spring", stiffness: 300 }}
             >
               <FaPhone className="h-6 w-6 text-primary" />
               <div>
                 <h3 className="font-semibold">Phone</h3>
-                <a href="tel:+1234567890" className="text-secondary hover:text-primary">
-                  +1 (234) 567-890
+                <a href="tel:+1234567890" className="text-primary">
+                  +88 01303106318
                 </a>
               </div>
             </motion.div>
@@ -113,13 +110,11 @@ export default function Contact() {
             <motion.div 
               className="flex items-center gap-4"
               variants={fadeInUp}
-              whileHover={{ x: 10 }}
-              transition={{ type: "spring", stiffness: 300 }}
             >
               <FaMapMarkerAlt className="h-6 w-6 text-primary" />
               <div>
                 <h3 className="font-semibold">Location</h3>
-                <p className="text-secondary">San Francisco, CA</p>
+                <p className="text-primary">Lalmonirhat, Rangpur</p>
               </div>
             </motion.div>
           </motion.div>
@@ -182,15 +177,16 @@ export default function Contact() {
               />
             </motion.div>
             
-            <motion.button
+            <Button 
+            variants="outline"
               type="submit"
               disabled={status === 'loading'}
-              className="w-full btn btn-primary"
+              className="w-full"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               {status === 'loading' ? 'Sending...' : 'Send Message'}
-            </motion.button>
+            </Button>
             
             {status === 'success' && (
               <motion.p 

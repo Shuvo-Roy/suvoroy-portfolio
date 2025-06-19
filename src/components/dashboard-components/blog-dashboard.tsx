@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { prisma } from "@/lib/prisma";
 import RecentBlogs from "./recent-blogs";
+import { FaProjectDiagram } from "react-icons/fa";
 
 
 const BlogDashboard = async () => {
@@ -25,6 +26,21 @@ const BlogDashboard = async () => {
     }),
     prisma.blog.count(),
   ]);
+  const [projects, totalProjects] = await Promise.all([
+    prisma.project.findMany({
+      orderBy: { createdAt: "desc" },
+      include: {
+        author: {
+          select: {
+            name: true,
+            email: true,
+            imageUrl: true,
+          },
+        },
+      },
+    }),
+    prisma.project.count(),
+  ]);
 
   return (
     <main className="flex-1 p-4 md:p-8">
@@ -34,9 +50,9 @@ const BlogDashboard = async () => {
           <p>Manage content and analytics</p>
         </div>
         <Link href="/dashboard/blogs/create">
-          <Button>
+          <Button variant="outline">
             <PlusCircle className="h-5 w-5 mr-2" />
-            New Article
+            New Blogs
           </Button>
         </Link>
       </div>
@@ -44,14 +60,20 @@ const BlogDashboard = async () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="font-medium text-sm">Total Articles</CardTitle>
+            <CardTitle className="font-medium text-sm">Total Blogs</CardTitle>
             <FileText className="h-5 w-5" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalPost}</div>
-            <p className="text-sm text-muted-foreground mt-1">
-              +5 from last month
-            </p>
+            <div className="text-2xl font-bold text-center">{totalPost}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="font-medium text-sm">Total Projects</CardTitle>
+            <FaProjectDiagram className="h-5 w-5" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-center">{totalProjects}</div>
           </CardContent>
         </Card>
       </div>

@@ -12,13 +12,13 @@ export default function Footer() {
                     <p className='text-sm text-secondary mt-2'>{new Date().getFullYear()}All rights reserved.</p>
                 </div>
                 <div className='flex space-x-4'>
-                    <Link href='/' className='text-2xl text-slate-600 hover:text-primary dark:text-gray-300 transition-duration-300'>
+                    <Link href='https://www.facebook.com/suvoroy.cse/' className='text-2xl text-slate-600 hover:text-primary dark:text-gray-300 transition-duration-300'>
                     <FaGithub/>
                     </Link>
-                    <Link href='/' className='text-2xl text-slate-600 hover:text-primary dark:text-gray-300 transition-duration-300'>
+                    <Link href='https://www.linkedin.com/in/suvo-roy/' className='text-2xl text-slate-600 hover:text-primary dark:text-gray-300 transition-duration-300'>
                     <FaFacebook/>
                     </Link>
-                    <Link href='/' className='text-2xl text-slate-600 hover:text-primary dark:text-gray-300 transition-duration-300'>
+                    <Link href='https://www.linkedin.com/in/suvo-roy/' className='text-2xl text-slate-600 hover:text-primary dark:text-gray-300 transition-duration-300'>
                     <FaLinkedin/>
                     </Link>
                 </div>

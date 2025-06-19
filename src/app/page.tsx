@@ -1,6 +1,4 @@
 import Hero from "../components/home/Hero";
-import Newsletter from "../components/home/Newsletter";
-import Footer from "../components/home/Footer";
 import { prisma } from '@/lib/prisma';
 import Projects from "@/components/home/Projects";
 import Blogs from "@/components/home/Blogs";
@@ -24,7 +22,6 @@ export default async function Home() {
       <HeroBottom icons={heroBottomIcons}/>
       <Projects projects={projects} />
       <Blogs blogs={blogs}/>
-      <Newsletter />
     </>
   );
 }
