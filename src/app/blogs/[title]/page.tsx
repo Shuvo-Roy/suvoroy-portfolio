@@ -1,15 +1,16 @@
-import BlogDetailPage from '@/components/home/BlogDetailPage';
-import { prisma } from '@/lib/prisma';
-import { Metadata } from 'next';
+import BlogDetailPage from "@/components/home/BlogDetailPage";
+import { prisma } from "@/lib/prisma";
+import { Metadata } from "next";
 
+type Params = {
+  params: {
+    title: string;
+  };
+};
 
-export async function generateMetadata(
-  { params }: { params: { title: string } }
-): Promise<Metadata> {
-  const { title } = params;
-
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const blog = await prisma.blog.findUnique({
-    where: { slug: title },
+    where: { slug: params.title },
     select: {
       title: true,
       metaDescription: true,
@@ -29,11 +30,9 @@ export async function generateMetadata(
   };
 }
 
-const Page = async ({ params }: { params: { title: string } }) => {
-  const { title } = params;
-
+const Page = async ({ params }: Params) => {
   const blog = await prisma.blog.findUnique({
-    where: { slug: title },
+    where: { slug: params.title },
     include: {
       author: {
         select: {
