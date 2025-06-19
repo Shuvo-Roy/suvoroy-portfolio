@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { Button } from "@/components/ui/button";
 import { editProject } from "../../../../actions/project/update-project";
+import Image from "next/image";
 
 interface TechStack {
   id: string;
@@ -154,9 +155,11 @@ const UpdateProject = ({ project, onCancel }: UpdateProjectProps) => {
                 Featured Image (Upload new to replace)
               </Label>
               {project.featuredImage && (
-                <img
+                <Image
                   src={project.featuredImage}
                   alt="Current Featured"
+                  height={96}
+                  width={160}
                   className="w-40 h-24 rounded object-cover mb-2"
                 />
               )}

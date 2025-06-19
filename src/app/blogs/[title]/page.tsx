@@ -5,14 +5,15 @@ import { Metadata } from 'next';
 type PageProps = {
   params: { title: string };
 };
-export async function generateMetadata({ params }: { params: { title: string } }): Promise<Metadata> {
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { title } = params;
 
   const blog = await prisma.blog.findUnique({
     where: { slug: title },
     select: {
       title: true,
-      metaDescription: true, 
+      metaDescription: true,
     },
   });
 
@@ -29,7 +30,7 @@ export async function generateMetadata({ params }: { params: { title: string } }
   };
 }
 
-const Page = async ({ params }: { params: { title: string } }) => {
+const Page = async ({ params }: PageProps) => {
   const { title } = params;
 
   const blog = await prisma.blog.findUnique({
