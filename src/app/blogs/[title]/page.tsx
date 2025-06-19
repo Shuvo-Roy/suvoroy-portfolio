@@ -2,6 +2,9 @@ import BlogDetailPage from '@/components/home/BlogDetailPage';
 import { prisma } from '@/lib/prisma';
 import { Metadata } from 'next';
 
+type PageProps = {
+  params: { title: string };
+};
 export async function generateMetadata({ params }: { params: { title: string } }): Promise<Metadata> {
   const { title } = params;
 

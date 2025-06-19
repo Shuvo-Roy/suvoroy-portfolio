@@ -17,7 +17,7 @@ type BlogDetailsProps = {
 
 const BlogDetailPage: React.FC<BlogDetailsProps> = async ({ blog }) => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background py-16">
       <main className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <article className="mx-auto max-w-3xl">
           <header className="mb-12">
