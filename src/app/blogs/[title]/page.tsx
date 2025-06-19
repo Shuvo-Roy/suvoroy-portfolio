@@ -2,11 +2,10 @@ import BlogDetailPage from '@/components/home/BlogDetailPage';
 import { prisma } from '@/lib/prisma';
 import { Metadata } from 'next';
 
-type PageProps = {
-  params: { title: string };
-};
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: { params: { title: string } }
+): Promise<Metadata> {
   const { title } = params;
 
   const blog = await prisma.blog.findUnique({
@@ -30,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-const Page = async ({ params }: PageProps) => {
+const Page = async ({ params }: { params: { title: string } }) => {
   const { title } = params;
 
   const blog = await prisma.blog.findUnique({
