@@ -1,5 +1,3 @@
-
-import EditEducationPage from '@/components/dashboard-components/educations/EditEducationPage';
 import EditExperience from '@/components/dashboard-components/experience/EditExp';
 import { prisma } from '@/lib/prisma';
 import React from 'react';

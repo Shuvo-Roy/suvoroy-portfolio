@@ -5,8 +5,7 @@ import RecentBlogs from "@/components/dashboard-components/recent-blogs";
 import { prisma } from "@/lib/prisma";
 
 const RecentBlogsPage = async () => {
-  const [blogs, totalPost] = await Promise.all([
-    prisma.blog.findMany({
+  const blogs= await prisma.blog.findMany({
       orderBy: { createdAt: "desc" },
       include: {
         author: {
@@ -17,9 +16,7 @@ const RecentBlogsPage = async () => {
           },
         },
       },
-    }),
-    prisma.blog.count(),
-  ]);
+    })
   return (
     <div>
       <div className="flex items-center justify-between my-8 mx-4 dark:bg-slate-800 bg-slate-200 rounded-sm p-4">

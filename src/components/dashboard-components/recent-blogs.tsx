@@ -36,7 +36,7 @@ const RecentBlogs: React.FC<RecentBlogsProps> = ({ blogs }) => {
     <Card className="mb-8">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle>Recent Article</CardTitle>
+          <CardTitle>Recent Blog</CardTitle>
           <Button className="text-muted-foreground" size="sm" variant="ghost">
             View All
             <ArrowRight className="ml-1 h-4 w-4" />

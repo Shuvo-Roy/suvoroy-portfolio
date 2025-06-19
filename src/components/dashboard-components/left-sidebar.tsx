@@ -1,21 +1,9 @@
 "use client";
-import { useTheme } from "@/app/context/ThemeContext";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
-  SignedIn,
-  SignOutButton,
-} from "@clerk/nextjs";
-import {
-  AppWindow,
-  Book,
-  FileText,
   LayoutDashboard,
-  MoonIcon,
-  Settings,
-  SunIcon,
 } from "lucide-react";
-import Link from "next/link";
 import { useState } from "react";
 import DashboardSidebar from "./DashboardSidebar";
 

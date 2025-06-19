@@ -4,7 +4,7 @@ import { Prisma } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 
 type ProjectType = Prisma.ProjectGetPayload<{
   include: {

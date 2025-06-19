@@ -11,26 +11,22 @@ import {
 import { Plus } from 'lucide-react';
 import React from 'react';
 import { prisma } from '@/lib/prisma';
-import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import DeleteEduBtn from '@/components/dashboard-components/educations/DeleteEducation';
 
 const EducationPage = async () => {
-  const [educationList, totalEducation] = await Promise.all([
-    prisma.education.findMany({
-      orderBy: { startDate: 'desc' }, // best sorting field for education
-      include: {
-        author: {
-          select: {
-            name: true,
-            email: true,
-            imageUrl: true,
-          },
-        },
+  const educationList = await prisma.education.findMany({
+  orderBy: { startDate: 'desc' },
+  include: {
+    author: {
+      select: {
+        name: true,
+        email: true,
+        imageUrl: true,
       },
-    }),
-    prisma.education.count(), // fixed from project.count()
-  ]);
+    },
+  },
+});
 
   return (
     <div className="">
@@ -65,9 +61,9 @@ const EducationPage = async () => {
                     <TableCell>{edu.institution}</TableCell>
                     <TableCell>{edu.degree}</TableCell>
                     <TableCell>{edu.field}</TableCell>
-                    <TableCell>{edu.startDate.toDateString()}</TableCell>
+                    <TableCell>{edu.startDate ? new Date(edu.startDate).toDateString() : 'N/A'}</TableCell>
                     <TableCell>
-                      {edu.endDate ? edu.endDate.toDateString() : 'Ongoing'}
+                       {edu.endDate ? new Date(edu.endDate).toDateString() : 'Ongoing'}
                     </TableCell>
                     <TableCell>
                       <div className="flex gap-2">
@@ -77,7 +73,6 @@ const EducationPage = async () => {
                           </Button>
                         </Link>
                         <DeleteEduBtn educationId={edu.id} />
-                        {/* Add Delete button here if needed */}
                       </div>
                     </TableCell>
                   </TableRow>

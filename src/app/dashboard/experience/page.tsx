@@ -12,13 +12,11 @@ import { Plus } from 'lucide-react';
 import React from 'react';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
-import DeleteEduBtn from '@/components/dashboard-components/educations/DeleteEducation';
 import DeleteExpBtn from '@/components/dashboard-components/experience/DeleteExp';
 
 
 const ExperiencePage = async () => {
-  const [expList, totalExp] = await Promise.all([
-    prisma.experience.findMany({
+  const expList = await prisma.experience.findMany({
       orderBy: { startDate: 'desc' },
       include: {
         author: {
@@ -29,10 +27,7 @@ const ExperiencePage = async () => {
           },
         },
       },
-    }),
-    prisma.experience.count(),
-  ]);
-
+    })
   return (
     <div className="">
       <div className="flex items-center justify-between my-8 mx-4 dark:bg-slate-800 bg-slate-200 rounded-sm p-4">
