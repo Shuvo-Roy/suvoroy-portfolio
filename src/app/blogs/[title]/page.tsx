@@ -1,17 +1,18 @@
-// app/blogs/[title]/page.tsx
-
 import { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import BlogDetailPage from "@/components/home/BlogDetailPage";
 import { notFound } from "next/navigation";
 
+// Metadata generation
 export async function generateMetadata({
   params,
 }: {
-  params: { title: string };
+  params: { slug: string[] };
 }): Promise<Metadata> {
+  const slug = params.slug[0];
+
   const blog = await prisma.blog.findUnique({
-    where: { slug: params.title },
+    where: { slug },
     select: { title: true, metaDescription: true },
   });
 
@@ -28,13 +29,16 @@ export async function generateMetadata({
   };
 }
 
+// Page component
 export default async function Page({
   params,
 }: {
-  params: { title: string };
+  params: { slug: string[] };
 }) {
+  const slug = params.slug[0];
+
   const blog = await prisma.blog.findUnique({
-    where: { slug: params.title },
+    where: { slug },
     include: {
       author: {
         select: { name: true, email: true, imageUrl: true },
