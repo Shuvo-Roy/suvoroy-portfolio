@@ -1,46 +1,43 @@
-import { Metadata } from 'next';
-import { prisma } from '@/lib/prisma';
-import BlogDetailPage from '@/components/home/BlogDetailPage';
-import { notFound } from 'next/navigation';
+// app/blogs/[title]/page.tsx
 
-// ✅ generateMetadata with correct inline param type
-export async function generateMetadata(
-  { params }: { params: { title: string } }
-): Promise<Metadata> {
+import { Metadata } from "next";
+import { prisma } from "@/lib/prisma";
+import BlogDetailPage from "@/components/home/BlogDetailPage";
+import { notFound } from "next/navigation";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { title: string };
+}): Promise<Metadata> {
   const blog = await prisma.blog.findUnique({
     where: { slug: params.title },
-    select: {
-      title: true,
-      metaDescription: true,
-    },
+    select: { title: true, metaDescription: true },
   });
 
   if (!blog) {
     return {
-      title: 'Blog Not Found',
-      description: 'This blog could not be located.',
+      title: "Blog Not Found",
+      description: "This blog could not be located.",
     };
   }
 
   return {
     title: blog.title,
-    description: blog.metaDescription || 'A blog post from Suvo Roy.',
+    description: blog.metaDescription || "A blog post from Suvo Roy.",
   };
 }
 
-// ✅ Page component with the same inline type
-export default async function Page(
-  { params }: { params: { title: string } }
-) {
+export default async function Page({
+  params,
+}: {
+  params: { title: string };
+}) {
   const blog = await prisma.blog.findUnique({
     where: { slug: params.title },
     include: {
       author: {
-        select: {
-          name: true,
-          email: true,
-          imageUrl: true,
-        },
+        select: { name: true, email: true, imageUrl: true },
       },
     },
   });
