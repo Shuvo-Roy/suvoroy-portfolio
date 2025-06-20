@@ -8,15 +8,12 @@ interface PageProps {
   };
 }
 
-// ✅ Generate metadata correctly
+// Generate metadata correctly
 export async function generateMetadata(
   {params}: PageProps
 ): Promise<Metadata> {
-  const { title } = params;
-
-  // No need to await `params` — it's synchronous
   const blog = await prisma.blog.findUnique({
-    where: { slug: title },
+    where: { slug: params.title },
     select: {
       title: true,
       metaDescription: true,
