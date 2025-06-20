@@ -1,18 +1,12 @@
-// app/blogs/[title]/page.tsx
-
 import { Metadata } from 'next';
 import { prisma } from '@/lib/prisma';
 import BlogDetailPage from '@/components/home/BlogDetailPage';
 import { notFound } from 'next/navigation';
 
-interface Params {
-  params: {
-    title: string;
-  };
-}
-
-// ✅ Works fine in dev & Vercel
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
+// ✅ Inline param typing — DO NOT reuse a `Params` or `PageProps` type
+export async function generateMetadata(
+  { params }: { params: { title: string } }
+): Promise<Metadata> {
   const blog = await prisma.blog.findUnique({
     where: { slug: params.title },
     select: {
@@ -34,7 +28,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
-export default async function Page({ params }: Params) {
+// ✅ Same here — inline only
+export default async function Page(
+  { params }: { params: { title: string } }
+) {
   const blog = await prisma.blog.findUnique({
     where: { slug: params.title },
     include: {
