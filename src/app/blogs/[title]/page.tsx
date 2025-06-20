@@ -1,17 +1,14 @@
-// app/blogs/[title]/page.tsx
-
 import { Metadata } from 'next';
 import { prisma } from '@/lib/prisma';
 import BlogDetailPage from '@/components/home/BlogDetailPage';
 import { notFound } from 'next/navigation';
 
+// ✅ generateMetadata with correct inline param type
 export async function generateMetadata(
-  context: any
+  { params }: { params: { title: string } }
 ): Promise<Metadata> {
-  const title = context?.params?.title;
-
   const blog = await prisma.blog.findUnique({
-    where: { slug: title },
+    where: { slug: params.title },
     select: {
       title: true,
       metaDescription: true,
@@ -31,11 +28,12 @@ export async function generateMetadata(
   };
 }
 
-export default async function Page(context: any) {
-  const title = context?.params?.title;
-
+// ✅ Page component with the same inline type
+export default async function Page(
+  { params }: { params: { title: string } }
+) {
   const blog = await prisma.blog.findUnique({
-    where: { slug: title },
+    where: { slug: params.title },
     include: {
       author: {
         select: {
@@ -47,7 +45,7 @@ export default async function Page(context: any) {
     },
   });
 
-  if (!blog) return notFound();
+  if (!blog) notFound();
 
   return <BlogDetailPage blog={blog} />;
 }
