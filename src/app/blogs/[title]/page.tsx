@@ -5,8 +5,14 @@ import { prisma } from '@/lib/prisma';
 import BlogDetailPage from '@/components/home/BlogDetailPage';
 import { notFound } from 'next/navigation';
 
-// ✅ Let Next.js handle the typing
-export async function generateMetadata({ params }: { params: { title: string } }): Promise<Metadata> {
+interface Params {
+  params: {
+    title: string;
+  };
+}
+
+// ✅ Works fine in dev & Vercel
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const blog = await prisma.blog.findUnique({
     where: { slug: params.title },
     select: {
@@ -28,8 +34,7 @@ export async function generateMetadata({ params }: { params: { title: string } }
   };
 }
 
-// ✅ Page component with inferred types
-export default async function Page({ params }: { params: { title: string } }) {
+export default async function Page({ params }: Params) {
   const blog = await prisma.blog.findUnique({
     where: { slug: params.title },
     include: {
