@@ -1,56 +1,29 @@
+// page.tsx
+import { getBlogData } from '@/lib/blogFetcher';
+import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { prisma } from '@/lib/prisma';
 import BlogDetailPage from '@/components/home/BlogDetailPage';
 
-type PageProps {
-  params: {
-    title: string;
-  };
-}
+type PageProps = {
+  params: { title: string };
+};
 
-// Generate metadata correctly
-export async function generateMetadata(
-  {params}: PageProps
-): Promise<Metadata> {
-  const blog = await prisma.blog.findUnique({
-    where: { slug: params.title },
-    select: {
-      title: true,
-      metaDescription: true,
-    },
-  });
-
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const blog = await getBlogData(params.title);
   if (!blog) {
     return {
-      title: "Blog Not Found",
-      description: "This blog could not be located.",
+      title: 'Blog Not Found',
+      description: 'This blog could not be located.',
     };
   }
-
   return {
     title: blog.title,
-    description: blog.metaDescription || "A blog post from Suvo Roy.",
+    description: blog.metaDescription || 'A blog post from Suvo Roy.',
   };
 }
 
-// ✅ Page Component
 export default async function Page({ params }: PageProps) {
-  const blog = await prisma.blog.findUnique({
-    where: { slug: params.title },
-    include: {
-      author: {
-        select: {
-          name: true,
-          email: true,
-          imageUrl: true,
-        },
-      },
-    },
-  });
-
-  if (!blog) {
-    return <h1 className="text-center py-20 text-2xl">Blog not found</h1>;
-  }
-
+  const blog = await getBlogData(params.title);
+  if (!blog) notFound();
   return <BlogDetailPage blog={blog} />;
 }
