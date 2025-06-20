@@ -1,16 +1,22 @@
-import BlogDetailPage from "@/components/home/BlogDetailPage";
-import { prisma } from "@/lib/prisma";
-import { Metadata } from "next";
+import { Metadata } from 'next';
+import { prisma } from '@/lib/prisma';
+import BlogDetailPage from '@/components/home/BlogDetailPage';
 
-type Params = {
+interface PageProps {
   params: {
     title: string;
   };
-};
+}
 
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
+// ✅ Generate metadata correctly
+export async function generateMetadata(
+  {params}: PageProps
+): Promise<Metadata> {
+  const { title } = params;
+
+  // No need to await `params` — it's synchronous
   const blog = await prisma.blog.findUnique({
-    where: { slug: params.title },
+    where: { slug: title },
     select: {
       title: true,
       metaDescription: true,
@@ -19,18 +25,19 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
   if (!blog) {
     return {
-      title: "Blog not found",
-      description: "",
+      title: "Blog Not Found",
+      description: "This blog could not be located.",
     };
   }
 
   return {
     title: blog.title,
-    description: blog.metaDescription ?? "Default description for blog",
+    description: blog.metaDescription || "A blog post from Suvo Roy.",
   };
 }
 
-const Page = async ({ params }: Params) => {
+// ✅ Page Component
+export default async function Page({ params }: PageProps) {
   const blog = await prisma.blog.findUnique({
     where: { slug: params.title },
     include: {
@@ -45,10 +52,8 @@ const Page = async ({ params }: Params) => {
   });
 
   if (!blog) {
-    return <h1>Blog not found</h1>;
+    return <h1 className="text-center py-20 text-2xl">Blog not found</h1>;
   }
 
   return <BlogDetailPage blog={blog} />;
-};
-
-export default Page;
+}
