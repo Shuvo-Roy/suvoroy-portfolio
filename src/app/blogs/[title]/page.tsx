@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { prisma } from '@/lib/prisma';
 import BlogDetailPage from '@/components/home/BlogDetailPage';
 
-interface PageProps {
+type PageProps {
   params: {
     title: string;
   };
