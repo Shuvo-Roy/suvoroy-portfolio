@@ -1,29 +1,49 @@
-// page.tsx
-import { getBlogData } from '@/lib/blogFetcher';
-import { notFound } from 'next/navigation';
+// app/blogs/[title]/page.tsx
+
 import { Metadata } from 'next';
+import { prisma } from '@/lib/prisma';
 import BlogDetailPage from '@/components/home/BlogDetailPage';
+import { notFound } from 'next/navigation';
 
-type PageProps = {
-  params: { title: string };
-};
+// ✅ Let Next.js handle the typing
+export async function generateMetadata({ params }: { params: { title: string } }): Promise<Metadata> {
+  const blog = await prisma.blog.findUnique({
+    where: { slug: params.title },
+    select: {
+      title: true,
+      metaDescription: true,
+    },
+  });
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const blog = await getBlogData(params.title);
   if (!blog) {
     return {
       title: 'Blog Not Found',
       description: 'This blog could not be located.',
     };
   }
+
   return {
     title: blog.title,
     description: blog.metaDescription || 'A blog post from Suvo Roy.',
   };
 }
 
-export default async function Page({ params }: PageProps) {
-  const blog = await getBlogData(params.title);
+// ✅ Page component with inferred types
+export default async function Page({ params }: { params: { title: string } }) {
+  const blog = await prisma.blog.findUnique({
+    where: { slug: params.title },
+    include: {
+      author: {
+        select: {
+          name: true,
+          email: true,
+          imageUrl: true,
+        },
+      },
+    },
+  });
+
   if (!blog) notFound();
+
   return <BlogDetailPage blog={blog} />;
 }
