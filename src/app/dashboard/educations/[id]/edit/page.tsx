@@ -15,9 +15,15 @@ const Page = async ({ params }: { params: Params }) => {
     return <h1>Education record not found for this ID</h1>;
   }
 
+  const educations = {
+    ...education,
+    startDate: education.startDate.toISOString(),
+    endDate: education.endDate ? education.endDate.toISOString() : null,
+  };
+
   return (
     <div>
-      <EditEducationPage education={education} />
+      <EditEducationPage education={educations} />
     </div>
   );
 };
