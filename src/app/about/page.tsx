@@ -6,6 +6,8 @@ import React from "react";
 import { FaCode } from "react-icons/fa6";
 import ExperienceCard from '@/components/home/ExperienceCard';
 
+export const dynamic = "force-dynamic";
+
 export default async function About () {
   const educations = await prisma.education.findMany({
       orderBy: { startDate : 'desc' },
