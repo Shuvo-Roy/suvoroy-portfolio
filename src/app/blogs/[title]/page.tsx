@@ -7,7 +7,7 @@ import { notFound } from 'next/navigation';
 
 type Params = Promise<{ title: string }>;
 // ✅ Works fine in dev & Vercel
-export async function generateMetadata({ params }: BlogParams): Promise<Metadata> {
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const blog = await prisma.blog.findUnique({
     where: { slug: params.title },
     select: {
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: BlogParams): Promise<Metadata
   };
 }
 
-export default async function Page({ params }: BlogParams) {
+export default async function Page({ params }: Params) {
   const blog = await prisma.blog.findUnique({
     where: { slug: params.title },
     include: {
