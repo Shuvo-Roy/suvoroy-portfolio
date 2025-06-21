@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 import BlogDetailPage from '@/components/home/BlogDetailPage';
 import { notFound } from 'next/navigation';
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const blog = await prisma.blog.findUnique({
     where: { slug: params.slug },
     select: {
@@ -24,9 +24,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: blog.metaDescription || 'A blog post from Suvo Roy.',
   };
 }
-type PageProps = { params: { slug: string } };
-export default async function Page({ params }: PageProps) {
-   console.log('Slug from URL:', params.slug);
+
+export default async function Page({ params }: { params: { slug: string } }) {
+  console.log('Slug from URL:', params.slug);
+
   const blog = await prisma.blog.findUnique({
     where: { slug: params.slug },
     include: {
