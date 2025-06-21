@@ -5,12 +5,7 @@ import { prisma } from '@/lib/prisma';
 import BlogDetailPage from '@/components/home/BlogDetailPage';
 import { notFound } from 'next/navigation';
 
-interface BlogParams {
-  params: {
-    title: string;
-  };
-}
-
+type Params = Promise<{ title: string }>;
 // ✅ Works fine in dev & Vercel
 export async function generateMetadata({ params }: BlogParams): Promise<Metadata> {
   const blog = await prisma.blog.findUnique({
