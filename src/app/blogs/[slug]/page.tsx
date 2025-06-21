@@ -1,15 +1,13 @@
-// app/blogs/[title]/page.tsx
-
 import { Metadata } from 'next';
 import { prisma } from '@/lib/prisma';
 import BlogDetailPage from '@/components/home/BlogDetailPage';
 import { notFound } from 'next/navigation';
 
-type Params = Promise<{ title: string }>;
-// ✅ Works fine in dev & Vercel
+type Params = { params: { slug: string } };
+
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const blog = await prisma.blog.findUnique({
-    where: { slug: params.title },
+    where: { slug: params.slug },
     select: {
       title: true,
       metaDescription: true,
@@ -31,7 +29,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function Page({ params }: Params) {
   const blog = await prisma.blog.findUnique({
-    where: { slug: params.title },
+    where: { slug: params.slug },
     include: {
       author: {
         select: {
