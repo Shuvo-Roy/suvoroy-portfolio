@@ -3,9 +3,9 @@ import { prisma } from '@/lib/prisma';
 import BlogDetailPage from '@/components/home/BlogDetailPage';
 import { notFound } from 'next/navigation';
 
-type Params = { params: { slug: string } };
+type PageProps = { params: { slug: string } };
 
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const blog = await prisma.blog.findUnique({
     where: { slug: params.slug },
     select: {
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
-export default async function Page({ params }: Params) {
+export default async function Page({ params }: PageProps) {
   const blog = await prisma.blog.findUnique({
     where: { slug: params.slug },
     include: {
