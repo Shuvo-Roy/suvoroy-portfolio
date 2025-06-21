@@ -4,7 +4,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./context/ThemeContext";
 import ClientWrapper from "../components/home/ClientWrapper";
-
+export const dynamic = "force-dynamic";
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
