@@ -14,7 +14,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
         <h1 className="text-2xl font-semibold">Welcome to your personal dashboard</h1>
         <p className="text-gray-600">Please sign in to continue</p>
         <SignInButton>
-          <SignIn>SignIn</SignIn>
+          <SignIn/>
         </SignInButton>
       </div></ClerkProvider>
     );
