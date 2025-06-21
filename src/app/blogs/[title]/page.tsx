@@ -3,16 +3,15 @@ import { prisma } from "@/lib/prisma";
 import BlogDetailPage from "@/components/home/BlogDetailPage";
 import { notFound } from "next/navigation";
 
-// Metadata generation
+
+type BlogParams = Promise<{ slug: string[] }>;
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string[] };
+  params: { title: string };
 }): Promise<Metadata> {
-  const slug = params.slug[0];
-
   const blog = await prisma.blog.findUnique({
-    where: { slug },
+    where: { slug: params.title },
     select: { title: true, metaDescription: true },
   });
 
@@ -29,16 +28,13 @@ export async function generateMetadata({
   };
 }
 
-// Page component
 export default async function Page({
   params,
 }: {
-  params: { slug: string[] };
+  params: { title: string };
 }) {
-  const slug = params.slug[0];
-
   const blog = await prisma.blog.findUnique({
-    where: { slug },
+    where: { slug: params.title },
     include: {
       author: {
         select: { name: true, email: true, imageUrl: true },
