@@ -25,7 +25,9 @@ const editBlogSchema = z.object({
 type CreateBlogFormState = {
   errors: {
     title?: string[];
+    metaDescription?: string[];
     category?: string[];
+    slug?: string[];
     featuredImage?: string[];
     content?: string[];
     formError?: string[];

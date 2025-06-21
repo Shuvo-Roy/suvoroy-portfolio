@@ -75,11 +75,13 @@ const EditBlogPage: React.FC<EditBlogProps> = ({ blog }) => {
                 name="metaDescription"
                 placeholder="Blog meta description"
                 className="w-full p-3 border rounded-lg"
-                defaultValue={blog.metaDescription}
+                defaultValue={blog.metaDescription ?? ""}
               />
-              {formState.errors.title && (
+              {formState.errors.metaDescription && (
                 <span className="text-red-600 text-sm ">
-                  {formState.errors.title}
+                  {Array.isArray(formState.errors.metaDescription)
+                    ? formState.errors.metaDescription[0]
+                    : formState.errors.metaDescription}
                 </span>
               )}
             </div>
@@ -114,7 +116,7 @@ const EditBlogPage: React.FC<EditBlogProps> = ({ blog }) => {
                 <Image
                   src={blog.featuredImage}
                   alt="Featured"
-                  width={200} 
+                  width={200}
                   height={96}
                   className="mt-2 h-24 rounded"
                 />
