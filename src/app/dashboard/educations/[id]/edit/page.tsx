@@ -8,7 +8,7 @@ type EditEducationParams = {
 };
 
 const Page: React.FC<EditEducationParams> = async ({ params }) => {
-  const { id } = params;
+  const { id } = await params;
 
   const education = await prisma.education.findUnique({
     where: { id },
