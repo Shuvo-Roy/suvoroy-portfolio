@@ -2,12 +2,10 @@ import UpdateProject from "@/components/dashboard-components/project/EditProject
 import { prisma } from "@/lib/prisma";
 import React from "react";
 
-type EditProjectParams = {
-  params: { id: string };
-};
+type Params = Promise<{ id: string }>;
 
-const Page = async ({params}: EditProjectParams) => {
-  const id = await (params.id);
+const Page = async ({ params }: { params: Params }) => {
+  const { id } = await params;
 
   const projectFromDb = await prisma.project.findUnique({
     where: { id },
@@ -20,6 +18,7 @@ const Page = async ({params}: EditProjectParams) => {
     ...projectFromDb,
     featuredImage: projectFromDb.image, // map image -> featuredImage
   };
+
   return (
     <div>
       <UpdateProject project={project} />
