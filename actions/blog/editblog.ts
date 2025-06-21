@@ -1,4 +1,5 @@
 "use server";
+
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -21,8 +22,6 @@ const editBlogSchema = z.object({
   content: z.string().optional(),
 });
 
-// initial state
-
 type CreateBlogFormState = {
   errors: {
     title?: string[];
@@ -32,23 +31,28 @@ type CreateBlogFormState = {
     formError?: string[];
   };
 };
+
 export const editBlog = async (
   blogId: string,
   prevState: CreateBlogFormState,
   formData: FormData
 ): Promise<CreateBlogFormState> => {
+  // Validate form data
   const result = editBlogSchema.safeParse({
     title: formData.get("title"),
+    slug: formData.get("slug"),
+    metaDescription: formData.get("metaDescription"),
     category: formData.get("category"),
     content: formData.get("content"),
   });
+
   if (!result.success) {
     return {
       errors: result.error.flatten().fieldErrors,
     };
   }
 
-  // user validations
+  // Check authentication
   const { userId } = await auth();
   if (!userId) {
     return {
@@ -57,21 +61,24 @@ export const editBlog = async (
       },
     };
   }
-  // existing blog
-  const exsistingBlog = await prisma.blog.findUnique({
+
+  // Check if blog exists
+  const existingBlog = await prisma.blog.findUnique({
     where: { id: blogId },
   });
-  if (!exsistingBlog) {
+
+  if (!existingBlog) {
     return {
       errors: { formError: ["Blog not found"] },
     };
   }
 
-  // find user for store data
-  const exsistingUser = await prisma.user.findUnique({
+  // Check if user is the blog author
+  const existingUser = await prisma.user.findUnique({
     where: { clerkUserId: userId },
   });
-  if (!exsistingUser || exsistingBlog.authorId !== exsistingUser.id) {
+
+  if (!existingUser || existingBlog.authorId !== existingUser.id) {
     return {
       errors: {
         formError: ["User not found. Please register"],
@@ -79,16 +86,15 @@ export const editBlog = async (
     };
   }
 
-  let imageUrl = exsistingBlog.featuredImage;
-
-  //start edting blogs
+  // Image upload (if provided)
+  let imageUrl = existingBlog.featuredImage;
   const imageFile = formData.get("featuredImage") as File | null;
-  if (!imageFile && imageFile.name !== "undefined") {
+
+  if (imageFile && imageFile.name !== "undefined") {
     try {
       const arrayBuffer = await imageFile.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
-      // upload image on cloudinary
       const uploadResponse: UploadApiResponse | undefined = await new Promise(
         (resolve, reject) => {
           const uploadStream = cloudinary.uploader.upload_stream(
@@ -104,6 +110,7 @@ export const editBlog = async (
           uploadStream.end(buffer);
         }
       );
+
       if (uploadResponse?.secure_url) {
         imageUrl = uploadResponse.secure_url;
       } else {
@@ -122,10 +129,7 @@ export const editBlog = async (
     }
   }
 
-  //error image
-
-  //final create
-
+  // Update blog
   try {
     await prisma.blog.update({
       where: { id: blogId },
@@ -138,6 +142,12 @@ export const editBlog = async (
         featuredImage: imageUrl,
       },
     });
+
+    revalidatePath("/dashboard");
+    redirect("/dashboard");
+
+    // This won't be reached, but TS wants a return
+    return { errors: {} };
   } catch (error: unknown) {
     if (error instanceof Error) {
       return {
@@ -145,15 +155,12 @@ export const editBlog = async (
           formError: [error.message],
         },
       };
-    } else {
-      return {
-        errors: {
-          formError: ["server error"],
-        },
-      };
     }
-  }
 
-  revalidatePath("/dashboard");
-  redirect("/dashboard");
+    return {
+      errors: {
+        formError: ["Server error"],
+      },
+    };
+  }
 };
