@@ -9,10 +9,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { useTheme } from "../../app/context/ThemeContext";
-
+import { Button } from "../ui/button";
 
 const Navbar = () => {
-  const {theme, toggleTheme} = useTheme()
+  const { theme, toggleTheme } = useTheme();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const pathname = usePathname();
 
@@ -51,7 +51,10 @@ const Navbar = () => {
                 </Link>
               );
             })}
-            <button onClick={toggleTheme} className="p-2 rounded-lg hover:bg-gray-100 dark:text-white hover:text-primary dark:hover:bg-slate-800 transition-colors cursor-pointer">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg hover:bg-gray-100 dark:text-white hover:text-primary dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            >
               {theme === "dark" ? (
                 <SunIcon className="w-5 h-5" />
               ) : (
@@ -59,7 +62,15 @@ const Navbar = () => {
               )}
             </button>
           </div>
-
+          <a
+            href="https://drive.google.com/file/d/1LN3Qbl_PXXfefM00446e6dCfgbzs4CUn/view?usp=drive_link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="outline" className="uppercase">
+              Resume
+            </Button>
+          </a>
           {/* mobile menu button  */}
           <button
             className="md:hiddenp-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
@@ -89,13 +100,16 @@ const Navbar = () => {
                 </div>
               ))}
               <div>
-                <button onClick={toggleTheme} className="flex items-center p-2 rounded-lg hover:bg-gray-100 text-primary dark:hover:bg-slate-800 transition-colors cursor-pointer">
-              {theme === "dark" ? (
-                <SunIcon className="w-5 h-5" />
-              ) : (
-                <MoonIcon className="w-5 h-5" />
-              )}
-            </button>
+                <button
+                  onClick={toggleTheme}
+                  className="flex items-center p-2 rounded-lg hover:bg-gray-100 text-primary dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                >
+                  {theme === "dark" ? (
+                    <SunIcon className="w-5 h-5" />
+                  ) : (
+                    <MoonIcon className="w-5 h-5" />
+                  )}
+                </button>
               </div>
             </div>
           </div>
