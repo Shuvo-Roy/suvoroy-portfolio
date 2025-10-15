@@ -73,7 +73,7 @@ const Navbar = () => {
           </a>
           {/* mobile menu button  */}
           <button
-            className="md:hiddenp-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            className="md:hidden rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
             onClick={toggleMobileMenu}
           >
             {isMobileMenuOpen ? (
